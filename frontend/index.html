@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>RAG Demo</title>
+
+  <!-- Markdown renderer -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+
+  <style>
+  :root {
+    --primary: #10b981;
+    --primary-dark: #059669;
+    --accent: #34d399;
+    --bg: #022c22;
+    --card: #ffffff;
+    --muted: #6b7280;
+    --border: #d1fae5;
+    --text: #022c22;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: "JetBrains Mono", monospace;
+    background:
+      radial-gradient(circle at top, #d1fae5 0%, #ecfdf5 35%, #f0fdf4 100%);
+    padding: 40px 16px;
+    color: var(--text);
+    letter-spacing: -0.01em;
+  }
+
+  .container {
+    max-width: 860px;
+    margin: auto;
+    background: var(--card);
+    padding: 32px;
+    border-radius: 18px;
+    border: 1px solid var(--border);
+    box-shadow:
+      0 20px 45px rgba(16, 185, 129, 0.18),
+      0 6px 14px rgba(0, 0, 0, 0.06);
+  }
+
+  .header {
+    margin-bottom: 28px;
+  }
+
+  h1 {
+    margin: 0;
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    background: linear-gradient(
+      90deg,
+      var(--primary-dark),
+      var(--accent)
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .subtitle {
+    margin-top: 8px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  textarea {
+    width: 100%;
+    height: 96px;
+    padding: 14px 16px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 14.5px;
+    border-radius: 12px;
+    border: 1.5px solid var(--border);
+    resize: vertical;
+    outline: none;
+    background: #f0fdf4;
+    transition: all 0.2s ease;
+  }
+
+  textarea::placeholder {
+    color: #9ca3af;
+  }
+
+  textarea:focus {
+    border-color: var(--primary);
+    background: #ffffff;
+    box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.25);
+  }
+
+  button {
+    margin-top: 16px;
+    padding: 12px 22px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+    color: white;
+    background: linear-gradient(
+      135deg,
+      var(--primary),
+      var(--accent)
+    );
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 24px rgba(16, 185, 129, 0.4);
+  }
+
+  button:active {
+    transform: translateY(0);
+  }
+
+  .answer {
+    margin-top: 30px;
+    padding: 22px;
+    background: #f0fdf4;
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    line-height: 1.8;
+    font-size: 14.5px;
+  }
+
+  .answer h1,
+  .answer h2,
+  .answer h3 {
+    margin-top: 1.2em;
+    color: #065f46;
+  }
+
+  .answer code {
+    background: #d1fae5;
+    padding: 3px 6px;
+    border-radius: 6px;
+    font-size: 13.5px;
+  }
+
+  .sources {
+    margin-top: 22px;
+    padding-top: 14px;
+    border-top: 1px dashed var(--border);
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  .sources strong {
+    color: #065f46;
+  }
+
+  .sources ul {
+    padding-left: 20px;
+    margin-top: 8px;
+  }
+
+  .sources li {
+    margin-bottom: 6px;
+  }
+
+  @media (max-width: 600px) {
+    h1 {
+      font-size: 22px;
+    }
+  }
+</style>
+
+
+</head>
+<body>
+
+<div class="container">
+  <div class="header">
+    <h1>RAG Demo</h1>
+    <div class="subtitle">Ask questions and get grounded answers with sources</div>
+  </div>
+
+  <textarea id="question" placeholder="Ask a question..."></textarea>
+  <button onclick="ask()">Ask Question</button>
+
+  <div id="output" class="answer"></div>
+  <div id="sources" class="sources"></div>
+</div>
+
+<script>
+async function ask() {
+  const question = document.getElementById("question").value;
+  const output = document.getElementById("output");
+  const sourcesDiv = document.getElementById("sources");
+
+  output.innerHTML = "Loading...";
+  sourcesDiv.innerHTML = "";
+
+  const response = await fetch("http://127.0.0.1:8000/ask", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ question })
+  });
+
+  const data = await response.json();
+
+  // Render Markdown answer
+  output.innerHTML = marked.parse(data.answer);
+
+  // Render sources
+  if (data.sources && data.sources.length > 0) {
+    let html = "<strong>Sources:</strong><ul>";
+    data.sources.forEach(src => {
+      html += `<li>${src}</li>`;
+    });
+    html += "</ul>";
+    sourcesDiv.innerHTML = html;
+  }
+}
+</script>
+
+</body>
+</html>

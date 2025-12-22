@@ -1,0 +1,5 @@
+faiss_index
+.env
+backend/__pycache__
+ingest/__pycache__
+myenv
