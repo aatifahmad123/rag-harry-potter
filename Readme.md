@@ -2,11 +2,11 @@
 
 This project implements a **Retrieval-Augmented Generation (RAG)** system that answers user queries using information retrieved from a custom document corpus. It combines **semantic search (FAISS)** with a **Groq-hosted LLaMA model** to generate grounded, source-backed answers.
 
-The project is designed to be **CPU-only**, **Lightning.ai compatible**, and easy to explain in hackathons, evaluations, or interviews.
+The project is designed to be **CPU-only** and easy to explain in hackathons, evaluations, or interviews.
 
 ---
 
-## 📸 Evaluation Examples
+## Evaluation Examples
 
 ### [1] Question from Book 2 (Correct Answer)
 ![Book 2 Question Result](assets/two.png)
@@ -22,7 +22,7 @@ The project is designed to be **CPU-only**, **Lightning.ai compatible**, and eas
 ![Beyond Corpus Result](assets/beyond.png)
 
 
-## 🚀 Features
+## Features
 
 * PDF document ingestion
 * Text chunking for semantic retrieval
@@ -36,7 +36,7 @@ The project is designed to be **CPU-only**, **Lightning.ai compatible**, and eas
 
 ---
 
-## 🧠 Architecture Overview
+## Architecture Overview
 
 ```
 PDF Documents
@@ -62,7 +62,7 @@ Formatted Answer + Sources
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 mini-rag/
@@ -93,7 +93,7 @@ mini-rag/
 
 ---
 
-## 🛠️ Requirements
+## Requirements
 
 * Python **3.10 or higher**
 * CPU-only environment (no GPU required)
@@ -101,7 +101,7 @@ mini-rag/
 
 ---
 
-## 🔧 Installation
+## Installation
 
 ### 1. Create a virtual environment
 
@@ -145,7 +145,7 @@ pip install \
 
 ---
 
-## 🔐 Environment Variables
+## Environment Variables
 
 Create a `.env` file in the project root:
 
@@ -155,7 +155,7 @@ GROQ_API_KEY=your_groq_api_key_here
 
 ---
 
-## 📄 Step-by-Step Usage
+## Step-by-Step Usage
 
 ### STEP 1: Add Documents
 
@@ -244,7 +244,7 @@ The UI sends requests to the FastAPI backend and displays:
 
 ---
 
-## 🧪 Example Query
+## Example Query
 
 **Question:**
 
@@ -262,7 +262,7 @@ Who is Harry Potter?
 
 ---
 
-## 🔍 Why Retrieval-Augmented Generation?
+## Why Retrieval-Augmented Generation?
 
 * Reduces hallucinations
 * Grounds answers in real documents
@@ -271,7 +271,7 @@ Who is Harry Potter?
 
 ---
 
-## 🧑‍💻 Notes
+## Notes
 
 * The corpus is **swappable** without code changes
 * The system is embedding-agnostic
@@ -279,7 +279,7 @@ Who is Harry Potter?
 
 ---
 
-## 📌 Possible Extensions
+## Possible Extensions
 
 * Clickable sources with chunk preview
 * Inline citations ([1], [2])
@@ -288,7 +288,7 @@ Who is Harry Potter?
 
 ---
 
-## ✅ Status
+## Status
 
 ✔ Fully working RAG pipeline
 ✔ Backend + frontend integrated
