@@ -1,4 +1,6 @@
-# Retrieval-Augmented Generation (RAG) Demo
+# LitRAG
+
+### Retrieval-Augmented Generation for long-form literary documents.
 
 This project implements a **Retrieval-Augmented Generation (RAG)** system that answers user queries using information retrieved from a custom document corpus. It combines **semantic search (FAISS)** with a **Groq-hosted LLaMA model** to generate grounded, source-backed answers.
 
